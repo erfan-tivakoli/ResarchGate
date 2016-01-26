@@ -22,7 +22,7 @@ def download_url(page_url):
     js_cited_in_url = "https://www.researchgate.net/publicliterature.PublicationIncomingCitationsList.html?publicationUid=" \
                       + str(publication_uid) + \
                       "&showCitationsSorter=true&showAbstract=true&showType=true&showPublicationPreview=true&" \
-                      "swapJournalAndAuthorPositions=false"
+                      "swapJournalAndAuthorPositions=false&limit=100000"
 
     r = requests.get(js_cited_in_url, headers=headers)
     result['cited_in'] = json.loads(r.text)
@@ -30,7 +30,7 @@ def download_url(page_url):
     js_references_url = "https://www.researchgate.net/publicliterature.PublicationCitationsList.html?publicationUid=" \
                         + str(publication_uid) + \
                         "&showCitationsSorter=true&showAbstract=true&showType=true&showPublicationPreview=true&" \
-                        "swapJournalAndAuthorPositions=false"
+                        "swapJournalAndAuthorPositions=false&limit=10000"
     r = requests.get(js_references_url, headers=headers)
     result['references'] = json.loads(r.text)
 
@@ -38,10 +38,9 @@ def download_url(page_url):
 
 
 def main():
-    page_url = "https://www.researchgate.net/publication/227183327_Development_Density-Based_Optimization_Modeling_of_Sustainable_Land_Use_Patterns"
+    page_url = 'https://www.researchgate.net/publication/282570552_A_Bayesian_approach_to_constrained_single-_and_multi-objective_optimization'
     result = (download_url(page_url))
-    pprint(result)
-    print(result['cited_in']['result']['data']['citationItems'][0]['data']['publicationUrl'])
+    
 
 
 if __name__ == '__main__':
