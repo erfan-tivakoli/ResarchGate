@@ -1,6 +1,6 @@
 __author__ = 'Rfun'
 import queue
-from pprint import pprint
+from queue import Queue
 
 
 class Scheduler():
@@ -29,11 +29,22 @@ class Scheduler():
             return True
         return False
 
-    def add(self, new_url):
-        if not self.check_duplication(new_url):
-            self.q.put(new_url)
-            self.history.add(new_url)
+    def add(self, urls):
+        if isinstance(urls, str):
+            urls = [urls]
+        else:
+            for url in urls:
+                if not self.check_duplication(url):
+                    self.q.put(url)
+                    self.history.add(url)
 
+
+
+    def get_new_url(self):
+        try:
+            return self.q.get()
+        except queue.Empty:
+            print('The scheduler is empty')
 
 def main():
     a = Scheduler()

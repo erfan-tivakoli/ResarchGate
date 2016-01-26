@@ -1,12 +1,20 @@
 __author__ = 'Rfun'
+
 from crawler.downloader import *
 from crawler.parser import *
+from crawler.item_pipeline import *
+from crawler.scheduler import *
+
+max_articles = 10
 
 def main():
-    page_url = "https://www.researchgate.net/publication/227183327_Development_Density-Based_Optimization_Modeling_of_Sustainable_Land_Use_Patterns"
-    result = download_url(page_url)
-    all_links = parse(result)
-    pprint(all_links)
+    scheduler = Scheduler()
+    item_pipeline = ItemPipeline(scheduler)
+    while(item_pipeline.get_items_len() < 20):
+        next_url = scheduler.get_new_url()
+        downloaded = download_url(next_url)
+        parsed = parse(downloaded)
+        item_pipeline.add_items(parsed)
 
 if __name__ == '__main__':
     main()
