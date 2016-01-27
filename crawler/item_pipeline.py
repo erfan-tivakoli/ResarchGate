@@ -22,7 +22,7 @@ class ItemPipeline():
     def dump_json(self, result):
         publication_uid = result['datas']['publication_uid']
         with open('all_jsons/' + str(publication_uid) + '.json', 'w') as json_file:
-            json.dump(json.loads(result), json_file)
+            json.dump(result, json_file)
         self.all_items += [result]
 
     def get_items_len(self):
@@ -41,3 +41,7 @@ class ItemPipeline():
     def pickle_graph(self):
         with open('graph.pkl', 'wb') as pickled_graph:
             pickle.dump(self.graph, pickled_graph)
+
+    def save_to_text_file(self):
+        with open('graph.txt', 'w') as text_graph:
+            text_graph.write(self.graph.__str__())

@@ -5,7 +5,7 @@ from crawler.parser import *
 from crawler.item_pipeline import *
 from crawler.scheduler import *
 
-max_articles = 20
+max_articles = 3
 
 
 def main():
@@ -23,7 +23,9 @@ def main():
         except:
             traceback.print_exc()
 
+    item_pipeline.save_to_text_file()
     item_pipeline.pickle_graph()
+
     print(item_pipeline.get_graph())
 
 if __name__ == '__main__':

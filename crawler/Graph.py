@@ -19,11 +19,10 @@ class Graph():
         return self.edges
 
     def __str__(self):
-        result = 'node set is: '
-        for node in self.nodes:
-            result += node + '\n'
-
-        for edge in self.edges:
-            result += edge + '\n'
+        result = 'nodes:'+'\n'
+        result += '\n'.join(node for node in self.nodes)
+        result += '\n'
+        result += 'edges:'+'\n'
+        result += '\n'.join(edge.__str__() for edge in self.edges)
 
         return result
