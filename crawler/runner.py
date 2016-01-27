@@ -5,7 +5,7 @@ from crawler.parser import *
 from crawler.item_pipeline import *
 from crawler.scheduler import *
 
-max_articles = 3
+max_articles = 1000
 
 
 def main():
@@ -26,7 +26,7 @@ def main():
     item_pipeline.save_to_text_file()
     item_pipeline.pickle_graph()
 
-    print(item_pipeline.get_graph())
+    # print(item_pipeline.get_graph())
 
 if __name__ == '__main__':
     main()
