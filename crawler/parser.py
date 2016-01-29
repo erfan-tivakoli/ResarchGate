@@ -1,3 +1,5 @@
+from crawler.utils import get_uid_from_url
+
 __author__ = 'chester'
 
 from bs4 import BeautifulSoup
@@ -7,6 +9,30 @@ import traceback
 
 base_url = "https://www.researchgate.net/"
 
+def parse_author_page_html(html):
+    soup = BeautifulSoup(html, 'html.parser')
+    number_of_pages = 1
+    try:
+        pages_link = soup.select('.c-list-navi')[0].select('.navi-page-link')
+        number_of_pages = int(pages_link[len(pages_link)-1].text)
+    except:
+        print('has no pages')
+        number_of_pages = 1
+    items = (soup.select('.li-publication'))
+    papers = dict()
+    for item in items:
+        url = item.select('.publication-preview')[0].get('href')
+        uid = get_uid_from_url(url)
+        authors = dict()
+        papers[uid] = authors
+        author_tags = item.select('a.authors')
+        for author_tag in author_tags:
+            name = author_tag.text
+            link = author_tag.get('href')
+            link = 'https://www.researchgate.net/' + link
+            authors[name] = link
+    result = {'number_of_pages' : number_of_pages, 'publications':papers}
+    return result
 
 def parse_html(html, publication_uid):
     soup = BeautifulSoup(html, 'html.parser')
@@ -85,9 +111,16 @@ def parse(result):
 def main():
     # url = "https://www.researchgate.net/publication/285458515_A_General_Framework_for_Constrained_Bayesian_Optimization_using_Information-based_Search"
     # r = requests.get(url)
+    #with open('html.txt', 'r') as f:
+    #    html = f.read()
+    #parse_html(html, 112)
+    #page_url = 'https://www.researchgate.net/profile/Konstantinos_Bousmalis'
+    #r = requests.get(page_url)
+    #pprint(r.content)
     with open('html.txt', 'r') as f:
         html = f.read()
-    parse_html(html, 112)
+    pprint(parse_author_page_html(html))
+
 
 
 if __name__ == '__main__':
