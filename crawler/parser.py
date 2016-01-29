@@ -23,16 +23,16 @@ def parse_author_page_html(html):
     for item in items:
         url = item.select('.publication-preview')[0].get('href')
         uid = get_uid_from_url(url)
-        authors = dict()
+        authors = []
         papers[uid] = authors
         author_tags = item.select('a.authors')
         for author_tag in author_tags:
             name = author_tag.text
             link = author_tag.get('href')
             link = 'https://www.researchgate.net/' + link
-            authors[name] = link
-    result = {'number_of_pages' : number_of_pages, 'publications':papers}
-    return result
+            authors.append((name,link))
+    papers['number_of_pages'] = number_of_pages
+    return papers
 
 def parse_html(html, publication_uid):
     soup = BeautifulSoup(html, 'html.parser')
@@ -120,8 +120,6 @@ def main():
     with open('html.txt', 'r') as f:
         html = f.read()
     pprint(parse_author_page_html(html))
-
-
 
 if __name__ == '__main__':
     main()

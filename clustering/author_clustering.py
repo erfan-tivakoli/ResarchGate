@@ -11,14 +11,16 @@ number_of_authors = 100
 
 def load_papers():
     path = os.path.join(os.path.dirname(__file__).replace('clustering', ''), 'all_jsons')
-    print(path)
-    users = dict()
+    authors = []
     for filename in os.listdir(path):
         with open(path + '/' + filename, 'r') as f:
-            real_doc = json.loads(f.read())
-            authors = real_doc['datas']['authors']
-            id = real_doc['datas']['publication_uid']
-            for i in authors:
+            real_author= json.loads(f.read())
+            author = dict()
+            author['name'] = real_author['name']
+            author['vector'] = dict()
+            uids = real_author['publications']
+            for uid in uids:
+
                 if authors[i] not in users:
                     users[authors[i]] = dict()
                 index = int(i)
