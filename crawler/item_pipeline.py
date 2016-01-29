@@ -25,6 +25,7 @@ class ItemPipeline():
         json_format = {}
         json_format['author_name'] = all_authors['author_name']
         (all_authors.__delitem__('author_name'))
+        (all_authors.__delitem__('number_of_pages'))
         json_format['publications'] = all_authors
         print('dumping')
         print(json_format)
@@ -35,7 +36,7 @@ class ItemPipeline():
 
 
     def dump_author(self,result):
-        with open('../authors/'+ result['author_name']+'.json', 'w') as json_file:
+        with open('authors/'+ result['author_name']+'.json', 'w') as json_file:
             json.dump(result, json_file)
         self.all_authors += [result]
 
