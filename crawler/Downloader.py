@@ -46,6 +46,21 @@ def download_url(page_url):
         # print('Error in request: ')
         traceback.print_exc()
 
+def download_author(author_url):
+    result = {}
+
+    headers = {
+        'accept': 'application/json',
+        'x-requested-with': 'XMLHttpRequest'
+    }
+    try :
+        r = requests.get(author_url)
+        html_file = r.text
+
+    except:
+        pass
+
+
 
 
 def main():
