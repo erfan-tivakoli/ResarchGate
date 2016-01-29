@@ -35,7 +35,7 @@ class ItemPipeline():
 
 
     def dump_author(self,result):
-        with open('../authors/'+ result['author_name']+'.json', 'w') as json_file:
+        with open('authors/'+ result['author_name']+'.json', 'w') as json_file:
             json.dump(result, json_file)
         self.all_authors += [result]
 
