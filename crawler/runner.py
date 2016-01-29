@@ -12,6 +12,7 @@ def main():
     scheduler = Scheduler()
     item_pipeline = ItemPipeline(scheduler)
     while item_pipeline.get_items_len() < max_articles:
+        print('\r %% %.2 of the total work' %(item_pipeline.get_items_len()*100/max_articles))
         try:
             next_url = scheduler.get_new_url()
             pprint('next url is %s' % next_url)

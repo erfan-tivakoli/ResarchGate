@@ -30,14 +30,14 @@ class Scheduler():
 
     def check_duplication(self, new_url):
         if new_url in self.history:
-            print('the link %s is duplicated' % (new_url))
+            # print('the link %s is duplicated' % (new_url))
             return True
         return False
 
     def add(self, urls):
         for url in urls:
             if not self.check_duplication(url):
-                pprint('adding url %s to the queue' % url)
+                # pprint('adding url %s to the queue' % url)
                 self.q.put(url)
                 self.history.add(url)
 
@@ -46,7 +46,8 @@ class Scheduler():
         try:
             return self.q.get()
         except queue.Empty:
-            print('The scheduler is empty')
+            # print('The scheduler is empty')
+            pass
 
 
 def main():
