@@ -5,6 +5,7 @@ import json
 from pprint import pprint
 import traceback
 from crawler.utils import *
+from crawler.parser import *
 
 
 def download_url(page_url):
@@ -46,6 +47,7 @@ def download_url(page_url):
         # print('Error in request: ')
         traceback.print_exc()
 
+
 def download_author(author_url):
     result = {}
 
@@ -53,14 +55,24 @@ def download_author(author_url):
         'accept': 'application/json',
         'x-requested-with': 'XMLHttpRequest'
     }
-    try :
+    try:
         r = requests.get(author_url)
         html_file = r.text
+        parsed_author_page = parse_author_page_html(html_file)
+        number_of_pages = 10
+        result = {}
+        result.update(parsed_author_page)
+
+        for i in range(number_of_pages):
+            r = requests.get(author_url + '\\' + str(i))
+            html_file = r.text
+            parsed_author_page = parse_author_page_html(html_file)
+            result.update(parsed_author_page)
+
+        return result
 
     except:
         pass
-
-
 
 
 def main():

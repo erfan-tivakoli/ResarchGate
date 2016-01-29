@@ -7,8 +7,7 @@ from crawler.scheduler import *
 
 max_articles = 1000
 
-
-def main():
+def crawl_articles():
     scheduler = Scheduler()
     item_pipeline = ItemPipeline(scheduler)
     while item_pipeline.get_items_len() < max_articles:
@@ -26,6 +25,17 @@ def main():
 
     item_pipeline.save_to_text_file()
     item_pipeline.pickle_graph()
+
+def crawl_author():
+    scheduler = Scheduler()
+    item_pipeline = ItemPipeline(scheduler)
+    while item_pipeline.get_items_len() < max_articles:
+        try:
+            pass
+        except:
+            pass
+
+def main():
 
     # print(item_pipeline.get_graph())
 
