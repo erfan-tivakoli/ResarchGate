@@ -5,12 +5,12 @@ import random
 from pprint import pprint
 __author__ = 'chester'
 
-number_of_iteration = 20
+number_of_iteration = 200
 
 def clustering(vectors):
     costs = []
     clusters = []
-    for i in range(60):
+    for i in range(10):
         curr_cluster = accurate_k_means(vectors, i+1)
         print('one cluster iteration ' + str(i))
         print('-----------------------------')

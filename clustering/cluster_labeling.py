@@ -99,7 +99,12 @@ def load_vectors():
     with open('../vectors.txt', 'rb') as f:
         return pickle.load(f)
 
+def store_labels(labels):
+    with open('clustering_labels.txt', 'wb') as file:
+        pickle.dump(labels, file)
 def main():
-    print(cluster_labeling())
+    labels = cluster_labeling()
+    store_labels(labels)
+
 if __name__ == '__main__':
     main()
