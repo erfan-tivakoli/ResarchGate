@@ -26,3 +26,11 @@ class Graph():
         result += '\n'.join(edge.__str__() for edge in self.edges)
 
         return result
+
+    def get_inner_edges(self):
+        inner_edge = set({})
+        for edge in self.edges:
+            if (edge[0] in self.nodes and edge[1] in self.nodes):
+                inner_edge.add(edge)
+
+        return inner_edge
