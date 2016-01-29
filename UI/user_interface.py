@@ -2,10 +2,10 @@ import json
 import os
 import pickle
 from pprint import pprint
+from clustering.author_clustering import load_authors, author_clustering
 from elastic import search
 
 __author__ = 'chester'
-
 
 
 def main():
@@ -19,7 +19,8 @@ def main():
         print('-1-Show paper')
         print('-2-Search')
         print('-3-show clusters')
-        print('-4-Exit')
+        print('-4-show authors clusters')
+        print('-5-Exit')
         choice = input('Enter # : ')
         if choice == '1':
             uid = input('Enter UID : ')
@@ -103,6 +104,14 @@ def main():
                         print(real_doc['datas']['title'])
                         print_dash()
         elif choice == '4':
+            print_dash()
+            clusters = author_clustering(load_authors())
+            for cluster in clusters:
+                print('cluster number : ' + str(cluster))
+                for name in clusters[cluster]:
+                    print(name)
+                print_dash()
+        elif choice == '5':
             break
 
 def print_dash():
