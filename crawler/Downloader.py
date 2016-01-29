@@ -55,15 +55,20 @@ def download_author(author_url):
         'accept': 'application/json',
         'x-requested-with': 'XMLHttpRequest'
     }
+    author_name = get_name_by_url(author_url)
+
     try:
         r = requests.get(author_url)
         html_file = r.text
         parsed_author_page = parse_author_page_html(html_file)
-        number_of_pages = 10
+        # number_of_pages = parsed_author_page['number_of_pages']
+        number_of_pages = 2
         result = {}
+        result['author_name'] = author_name
         result.update(parsed_author_page)
 
         for i in range(number_of_pages):
+            print('page number %d' % i)
             r = requests.get(author_url + '\\' + str(i))
             html_file = r.text
             parsed_author_page = parse_author_page_html(html_file)
@@ -72,7 +77,7 @@ def download_author(author_url):
         return result
 
     except:
-        pass
+        traceback.print_exc()
 
 
 def main():

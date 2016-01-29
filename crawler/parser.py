@@ -61,10 +61,6 @@ def parse_html(html, publication_uid):
         # print('Error in beautifulsoup: ')
         traceback.print_exc()
 
-def parse_author_page_html(author_page):
-    soup = BeautifulSoup(author_page, 'html.parser')
-    try:
-        number_of_pages = soup.select()
 
 
 def parse_cited_in(json_cited_in):

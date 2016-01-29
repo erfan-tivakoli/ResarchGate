@@ -19,6 +19,22 @@ class ItemPipeline():
                           references=all_datas['references'])
         # print('finished adding')
 
+    def add_authors(self, all_authors):
+
+        json_format = {}
+        json_format['author_name'] = all_authors['author_name']
+        (all_authors.__delitem__('author_name'))
+        json_format['publications'] = all_authors
+        print('dumping')
+        print(json_format)
+        self.dump_author_json(json_format)
+        print('dumped')
+        self.scheduler.add(all_authors.values())
+
+    def dump_author_json(self, result):
+        with open('all_authors_jsons/'+ result['author_name']+'.json', 'w') as json_file:
+            json.dump(json.loads(result), json_file)
+
     def dump_json(self, result):
         publication_uid = result['datas']['publication_uid']
         with open('all_jsons/' + str(publication_uid) + '.json', 'w') as json_file:
