@@ -16,7 +16,18 @@ title_priority = 3
 def index():
     docs_list = load_docs()
     es.indices.delete(index='researchgate_index', ignore=[400, 404])
-    es.indices.create(index='researchgate_index', ignore=400)
+    es.indices.create(index='researchgate_index'
+                                            #body =  {"settings": {
+                                            #            "analysis": {
+                                            #              "analyzer": {
+                                            #                "my_analyzer": {
+                                            #                  "type": "standard",
+                                            #                  "stopwords": [ "title", "of" ]
+                                            #                }
+                                            #              }
+                                            #            }
+                                            #          }}
+                                            , ignore=400)
     ids = []
     for doc in docs_list:
         id = doc['id']
@@ -82,12 +93,6 @@ def tf_idf_vectorize(vocab, raw_vector, length):
         idf = log((length+1)/vocab[term])
         tf = raw_vector[term]['tf']
         tf_idf_vector[term] = idf*tf
-    #for term in vocab:
-    #    idf = log((length+1)/vocab[term])
-    #    tf = 0
-    #    if term in raw_vector:
-    #        tf = raw_vector[term]['tf']
-    #    tf_idf_vector[term] = idf*tf
     return tf_idf_vector
 
 def compute_terms(vectors):
@@ -138,6 +143,10 @@ def load_docs():
         with open(path + '/' + filename, 'r') as f:
             doc = dict()
             real_doc = json.loads(f.read())
+            authors = real_doc['datas']['authors'].values()
+            doc['authors'] = ''
+            for author in authors:
+                doc['authors'] += author + ' , '
             doc['abstract'] = real_doc['datas']['abstract']
             doc['title'] = real_doc['datas']['title']
             doc['id'] = real_doc['datas']['publication_uid']
@@ -156,8 +165,9 @@ def write_vectors(vectors):
         pickle.dump(vectors, f)
 
 def main():
+    #load_docs()
     print('hello')
-    #index()
+    index()
     #vectors = collection_vectorize()
     #write_vectors(vectors)
 
