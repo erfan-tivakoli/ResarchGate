@@ -9,6 +9,7 @@ class ItemPipeline():
     def __init__(self, scheduler):
         self.scheduler = scheduler
         self.all_items = []
+        self.all_authors = []
         self.graph = Graph()
 
     def add_items(self, all_datas):
@@ -27,13 +28,16 @@ class ItemPipeline():
         json_format['publications'] = all_authors
         print('dumping')
         print(json_format)
-        self.dump_author_json(json_format)
+        self.dump_author(json_format)
         print('dumped')
-        self.scheduler.add(all_authors.values())
+        for value in all_authors.values():
+            self.scheduler.add(value)
 
-    def dump_author_json(self, result):
-        with open('all_authors_jsons/'+ result['author_name']+'.json', 'w') as json_file:
-            json.dump(json.loads(result), json_file)
+
+    def dump_author(self,result):
+        with open('../authors/'+ result['author_name']+'.json', 'w') as json_file:
+            json.dump(result, json_file)
+        self.all_authors += [result]
 
     def dump_json(self, result):
         publication_uid = result['datas']['publication_uid']
