@@ -20,13 +20,14 @@ def load_papers():
             author['vector'] = dict()
             uids = real_author['publications']
             for uid in uids:
+                uid_authors = uids[uid]
+                
+                for i in range(len(uid_authors)):
+                    uid_author = uid_authors[i]
+                    if uid_author[0] ==  author['name']:
+                        author['vector'][uid] = i+1
 
-                if authors[i] not in users:
-                    users[authors[i]] = dict()
-                index = int(i)
-                print(index)
-                users[authors[i]][id] = index
-    return users
+    return authors
 
 def main():
     authors = (load_papers())

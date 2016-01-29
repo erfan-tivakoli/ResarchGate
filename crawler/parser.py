@@ -30,7 +30,7 @@ def parse_author_page_html(html):
             name = author_tag.text
             link = author_tag.get('href')
             link = 'https://www.researchgate.net/' + link
-            authors.append((name,link))
+            authors.append(link)
     papers['number_of_pages'] = number_of_pages
     return papers
 
