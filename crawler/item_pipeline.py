@@ -12,12 +12,12 @@ class ItemPipeline():
         self.graph = Graph()
 
     def add_items(self, all_datas):
-        print('started to add items')
+        # print('started to add items')
         self.dump_json(all_datas)
         self.scheduler.add(all_datas['cited_in'][:10] + all_datas['references'][:10])
         self.add_to_graph(publication_uid=all_datas['datas']['publication_uid'], cited_in=all_datas['cited_in'],
                           references=all_datas['references'])
-        print('finished adding')
+        # print('finished adding')
 
     def dump_json(self, result):
         publication_uid = result['datas']['publication_uid']

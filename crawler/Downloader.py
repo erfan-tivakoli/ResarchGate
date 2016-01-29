@@ -16,7 +16,7 @@ def download_url(page_url):
     }
 
     try:
-        pprint('started to fetch %s' % page_url)
+        # pprint('started to fetch %s' % page_url)
         r = requests.get(page_url)
         publication_uid = get_uid_from_url(page_url)
         result['publication_uid'] = publication_uid
@@ -28,11 +28,11 @@ def download_url(page_url):
                           "&showCitationsSorter=true&showAbstract=true&showType=true&showPublicationPreview=true&" \
                           "swapJournalAndAuthorPositions=false&limit=100000"
 
-        pprint('started to fetch the cited in')
+        # pprint('started to fetch the cited in')
         r = requests.get(js_cited_in_url, headers=headers)
         result['cited_in'] = json.loads(r.text)
 
-        pprint('started to fetch the references')
+        # pprint('started to fetch the references')
         js_references_url = "https://www.researchgate.net/publicliterature.PublicationCitationsList.html?publicationUid=" \
                             + str(publication_uid) + \
                             "&showCitationsSorter=true&showAbstract=true&showType=true&showPublicationPreview=true&" \
@@ -40,10 +40,10 @@ def download_url(page_url):
         r = requests.get(js_references_url, headers=headers)
         result['references'] = json.loads(r.text)
 
-        pprint('finished fetching the total page')
+        # pprint('finished fetching the total page')
         return result
     except:
-        print('Error in request: ')
+        # print('Error in request: ')
         traceback.print_exc()
 
 

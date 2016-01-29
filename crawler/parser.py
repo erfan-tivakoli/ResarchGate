@@ -32,7 +32,7 @@ def parse_html(html, publication_uid):
         return result
 
     except:
-        print('Error in beautifulsoup: ')
+        # print('Error in beautifulsoup: ')
         traceback.print_exc()
 
 
@@ -44,9 +44,10 @@ def parse_cited_in(json_cited_in):
         try:
             result += [base_url + item['data']['publicationUrl']]
         except:
-            pprint(json_cited_in['result']['data']['publicationLink'])
-            pprint('cited_in to :')
-            pprint(item['data']['title'])
+            # pprint(json_cited_in['result']['data']['publicationLink'])
+            # pprint('cited_in to :')
+            # pprint(item['data']['title'])
+            pass
 
     return result
 
@@ -60,9 +61,10 @@ def parse_references(json_references):
         try:
             result += [base_url + item['data']['publicationUrl']]
         except:
-            pprint(json_references['result']['data']['publicationLink'])
-            pprint('referenced to :')
-            pprint(item['data']['title'])
+            # pprint(json_references['result']['data']['publicationLink'])
+            # pprint('referenced to :')
+            # pprint(item['data']['title'])
+            pass
 
             traceback.print_exc()
 
@@ -71,11 +73,11 @@ def parse_references(json_references):
 
 def parse(result):
     all_datas = {}
-    pprint('parsing html')
+    # pprint('parsing html')
     all_datas['datas'] = parse_html(result['page'], result['publication_uid'])
-    pprint('parsing cited_in')
+    # pprint('parsing cited_in')
     all_datas['cited_in'] = parse_cited_in(result['cited_in'])
-    pprint('parsing references')
+    # pprint('parsing references')
     all_datas['references'] = parse_references(result['references'])
     return all_datas
 
