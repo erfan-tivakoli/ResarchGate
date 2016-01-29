@@ -1,8 +1,11 @@
+import operator
+
 __author__ = 'Rfun'
 from crawler.Graph import *
 import numpy as np
 from numpy import linalg as la
 import pickle
+import json
 
 
 class PageRank():
@@ -38,7 +41,11 @@ class PageRank():
             if la.norm(va[i] - 1) < 0.001:
                 break
 
-        return ve[:, i]
+        ve_real = []
+        for j in range(self.nodes_size):
+            ve_real.append(la.norm(ve[j, i]))
+        ve_real = ve_real/sum(ve_real)
+        return ve_real
 
 
 def run():
@@ -51,7 +58,8 @@ def run():
     for i in range(len(pr.nodes)):
         page_rank_dict[pr.nodes[i]] = la.norm(page_rank_vector[i])
 
-    
+    with open('page_rank.json', 'w') as json_file:
+        json.dump(page_rank_dict, json_file)
 
 
 if __name__ == '__main__':
