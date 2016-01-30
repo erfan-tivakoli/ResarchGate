@@ -13,7 +13,7 @@ from elasticsearch import Elasticsearch
 abs_factor = 3
 title_factor = 4
 author_factor = 1
-page_rank_factor = 1
+page_rank_factor = 200
 
 def search(query, number_of_retrieves):
     es = Elasticsearch()
@@ -45,12 +45,14 @@ def add_score(curr_result, final_result, priority):
             final_result[id] = {'title':source['title'],'abstract':source['abstract'],'authors':source['authors'],'score':doc['_score']*priority}
 
 def load_page_rank():
-    page_rank = {}
-    path = os.path.join(os.path.dirname(__file__).replace('elastic', ''), 'all_jsons')
-    for filename in os.listdir(path):
-        with open(path + '/' + filename, 'r') as f:
-            real_doc = json.loads(f.read())
-            page_rank[real_doc['datas']['publication_uid']] = random()
+    with open('../crawler/page_rank.json','r') as f:
+        page_rank = json.loads(f.read())
+    #page_rank = {}
+    #path = os.path.join(os.path.dirname(__file__).replace('elastic', ''), 'all_jsons')
+    #for filename in os.listdir(path):
+    #    with open(path + '/' + filename, 'r') as f:
+    #        real_doc = json.loads(f.read())
+    #        page_rank[real_doc['datas']['publication_uid']] = random()
     return page_rank
 
 

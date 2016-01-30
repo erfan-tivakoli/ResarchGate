@@ -5,30 +5,30 @@ import random
 from pprint import pprint
 __author__ = 'chester'
 
-number_of_iteration = 200
+number_of_iteration = 50
 
 def clustering(vectors):
     costs = []
     clusters = []
-    for i in range(10):
+    for i in range(15):
         curr_cluster = accurate_k_means(vectors, i+1)
-        print('one cluster iteration ' + str(i))
-        print('-----------------------------')
+        #print('one cluster iteration ' + str(i))
+        #print('-----------------------------')
         costs.append(curr_cluster['cost'])
         clusters.append(curr_cluster)
-    print(costs)
+    #print(costs)
     diff = []
     index = len(costs)-1
     for i in range(1,len(costs)):
         if costs[i] > costs[i-1]:
             index = i
-            print(costs[i])
-            print(costs[i-1])
+            #print(costs[i])
+            #print(costs[i-1])
             break
-    print(index)
+    #print(index)
     for i in range(1,index):
         diff.append((costs[i+1]-2*costs[i]+costs[i-1]))
-    print(diff)
+    #print(diff)
     minimum = min(diff,)
     cluster_number = 1
     for i in range(len(diff)):
@@ -41,7 +41,7 @@ def accurate_k_means(vectors, k):
     curr_cluster = k_means(vectors, k)
     for i in range(number_of_iteration):
         new_cluster = k_means(vectors, k)
-        print('intra cluster iteration : ' + str(i))
+        #print('intra cluster iteration : ' + str(i))
         if new_cluster['cost'] < curr_cluster['cost']:
             curr_cluster = new_cluster
     return curr_cluster
