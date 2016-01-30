@@ -14,7 +14,7 @@ class PageRank():
         self.nodes = list(self.graph.get_nodes())
         self.inner_edges = self.graph.get_inner_edges()
         self.nodes_size = len(self.nodes)
-        self.transaction_matrix = np.zeros((self.nodes_size, self.nodes_size), dtype=np.int)
+        self.transaction_matrix = np.zeros((self.nodes_size, self.nodes_size), dtype=np.double)
         self.teleport = 0.1
 
 
@@ -24,28 +24,27 @@ class PageRank():
 
         for i in range(self.nodes_size):
             row_sum = sum(self.transaction_matrix[i])
-            if row_sum < 1:
+            if row_sum < 0.001:
                 for j in range(self.nodes_size):
                     self.transaction_matrix[i][j] = 1 / (self.nodes_size)
             else:
                 for j in range(self.nodes_size):
-                    self.transaction_matrix[i][j] = 1 / (row_sum)
+                    self.transaction_matrix[i][j] = self.transaction_matrix[i][j] / (row_sum)
 
         self.transaction_matrix = self.transaction_matrix * (1 - self.teleport) + \
                                   np.ones((self.nodes_size, self.nodes_size)) * (1 / self.nodes_size) * (self.teleport)
-        self.transaction_matrix = self.transaction_matrix.transpose()
+
+        for i in range(self.nodes_size):
+            print(sum(self.transaction_matrix[i]))
+
 
     def calc_page_rank(self):
-        va, ve = la.eig(self.transaction_matrix)
-        for i in range(len(va)):
-            if la.norm(va[i] - 1) < 0.001:
-                break
+        position_vec = np.ones(self.nodes_size)/(self.nodes_size)
+        for i in range(1000):
+            position_vec = position_vec.dot(self.transaction_matrix)
 
-        ve_real = []
-        for j in range(self.nodes_size):
-            ve_real.append(la.norm(ve[j, i]))
-        ve_real = ve_real/sum(ve_real)
-        return ve_real
+        return position_vec
+
 
 
 def run():
